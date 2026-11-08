@@ -103,17 +103,32 @@ td li+li{margin-top:4px}
 .chip{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:2px 6px;margin-left:8px;vertical-align:2px;border:1px solid currentColor}
 .chip.on{color:#46d369}
 
-/* garage */
-.garage{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.car{background:var(--tarmac);border:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.car .no{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--s2)}
-.car h3{font-family:var(--display);font-weight:700;font-size:24px;margin:0;line-height:1.1;text-transform:uppercase}
-.car p{margin:0;font-size:15px;color:var(--chalk)}
-.spec{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px;padding-top:8px;border-top:1px dashed var(--line)}
+
+/* garage: project rows with code */
+.garage{display:grid;grid-template-columns:1fr;gap:16px}
+.car{background:var(--tarmac);border:1px solid var(--line);padding:22px;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+.car-info{display:flex;flex-direction:column;gap:10px;min-width:0}
+.car .no{font-family:var(--display);font-weight:800;font-size:36px;line-height:1;color:var(--s2)}
+.car h3{font-family:var(--display);font-weight:700;font-size:26px;margin:0;line-height:1.1;text-transform:uppercase}
+.car p{margin:0;font-size:15px;max-width:68ch}
+.stats{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 24px}
+.stats li{font-size:13px;color:var(--muted)}
+.stats b{display:block;font-family:var(--display);font-weight:800;font-size:26px;color:var(--chalk);line-height:1;font-variant-numeric:tabular-nums}
+.spec{display:flex;flex-wrap:wrap;gap:6px;padding-top:8px;border-top:1px dashed var(--line)}
 .spec span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.spec span+span::before{content:"/ ";color:var(--line)}
+.code{min-width:0;border:1px solid var(--line);background:var(--asphalt)}
+.code summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.code summary::-webkit-details-marker{display:none}
+.code summary span::before{content:"▸ ";color:var(--s2)}
+.code[open] summary span::before{content:"▾ "}
+.code summary em{font-style:normal;color:var(--muted)}
+.code pre{margin:0;padding:14px;overflow-x:auto;border-top:1px solid var(--line);font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--chalk);tab-size:4}
+.code .repo{display:inline-block;margin:0 14px 12px}
 .repo{font-family:var(--mono);font-size:12px;color:var(--s2);text-decoration:none}
 .repo:hover{text-decoration:underline}
-.spec span+span::before{content:"/ ";color:var(--line)}
+td b{color:var(--s3);font-weight:700}
+@media (min-width:980px){.car:has(.code){grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:start}}
 
 /* telemetry */
 .tele{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -154,7 +169,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 
 @media (max-width:860px){
   .hero{grid-template-columns:1fr;padding-block:36px 28px}
-  .garage,.off{grid-template-columns:1fr 1fr}
+  .off{grid-template-columns:1fr 1fr}
   .radio .wrap{grid-template-columns:1fr}
   nav{display:none}
 }
@@ -162,7 +177,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .strip{grid-template-columns:1fr 1fr}
   .strip div:nth-child(2){border-right:0}
   .strip div:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .garage,.off,.tele{grid-template-columns:1fr}
+  .off,.tele{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -257,7 +272,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
               <td class="pos">01</td>
               <td><span class="role">Software Team Member<span class="chip on">On track</span></span><span class="team">Waterloo Rocketry</span></td>
               <td class="date">Sept 2026 – Present</td>
-              <td><ul><li>Contributing to the team's launch app, built with React and Java.</li></ul></td>
+              <td><ul><li>Building features for the team's React launch app, the ground dashboard used during rocket launches.</li><li>Picked up issue <b>#28</b>: connecting dashboard widgets to rocket telemetry data.</li></ul></td>
             </tr>
             <tr>
               <td class="pos">02</td>
@@ -269,7 +284,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
               <td class="pos">03</td>
               <td><span class="role">IT Co-op Student</span><span class="team">Eagleview Managed Services · Toronto</span></td>
               <td class="date">Jul – Aug 2024</td>
-              <td><ul><li>Built 50+ HTML/CSS machine-performance reports integrated into client cybersecurity monitoring workflows.</li><li>Analyzed endpoint data across 20+ businesses to find efficiency gains and potential vulnerabilities.</li></ul></td>
+              <td><ul><li>Built <b>50+</b> HTML/CSS machine-performance reports that fed into client cybersecurity monitoring.</li><li>Analyzed endpoint data across <b>20+</b> client businesses to flag efficiency gains and potential vulnerabilities.</li></ul></td>
             </tr>
           </tbody>
         </table>
@@ -283,23 +298,105 @@ footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
       <div class="sec-head"><span class="s" style="background:var(--s2);color:var(--chalk)">S2</span><h2>The garage</h2><p>Projects</p></div>
       <div class="garage">
         <article class="car">
-          <div class="no">#3P</div>
-          <h3>Multiplayer UNO</h3>
-          <p>Networked three-player UNO with host/join over a local network, built on an MVC architecture. Special cards, CPU opponents and three card themes. Now being extended to play across any network.</p>
-          <div class="spec"><span>Java</span><span>Swing</span><span>TCP sockets</span></div>
-          <a class="repo" href="https://github.com/lauchloe23/Java-Digital-UNO-3-Players" target="_blank" rel="noopener">View code →</a>
+          <div class="car-info">
+            <div class="no">#01</div>
+            <h3>Multiplayer UNO</h3>
+            <p>A networked UNO game where one player hosts and two others join over the local network. Built in an MVC structure with a separate networking layer, a CPU opponent, player elimination and wild colour picking. The deck shuffle stays in sync across machines by broadcasting a shared seed. Next step: play across any network, not only the same Wi-Fi.</p>
+            <ul class="stats"><li><b>4,300+</b>lines of Java</li><li><b>3</b>networked players</li><li><b>3</b>card themes</li></ul>
+            <div class="spec"><span>Java</span><span>Swing</span><span>TCP sockets</span><span>MVC</span></div>
+          </div>
+          <details class="code"><summary><span>Show code</span><em>Java</em></summary><pre><code>// UnoModel.java: is this card legal on the discard pile?
+public boolean isValidPlay(String strCardName){
+    if(strCardName.startsWith(&quot;wild&quot;)) return true;
+    if(intDiscardPileSize == 0) return true;
+    String strTopCard = strDiscardPile[intDiscardPileSize - 1][0];
+
+    // after a wild, only the colour the player picked is legal
+    if(strTopCard.startsWith(&quot;wild&quot;)){
+        if(!strWildColor.equals(&quot;&quot;)){
+            return getColor(strCardName).equals(strWildColor);
+        }
+        return true;
+    }
+    return getColor(strCardName).equals(getColor(strTopCard))
+        || getValue(strCardName).equals(getValue(strTopCard));
+}
+
+// pass the turn, either direction, skipping eliminated players
+public void advanceTurn() {
+    int intCount = 0;
+    boolean foundValidPlayer = false;
+    while (intCount &lt; intPlayers &amp;&amp; !foundValidPlayer) {
+        if (blnClockwise) {
+            intCurrentTurn = (intCurrentTurn + 1) % intPlayers;
+        } else {
+            intCurrentTurn = (intCurrentTurn + intPlayers - 1) % intPlayers;
+        }
+        intCount++;
+        foundValidPlayer = !blnEliminated[intTurnOrder[intCurrentTurn]];
+    }
+}</code></pre><a class="repo" href="https://github.com/lauchloe23/Java-Digital-UNO-3-Players" target="_blank" rel="noopener">Full repo on GitHub →</a></details>
         </article>
         <article class="car">
-          <div class="no">#NN</div>
-          <h3>Digit Recognition Network</h3>
-          <p>A neural network for handwritten digit recognition, built to implement core machine learning concepts by hand.</p>
-          <div class="spec"><span>Python</span><span>Machine learning</span></div>
+          <div class="car-info">
+            <div class="no">#02</div>
+            <h3>Mini Coding Agent</h3>
+            <p>A command-line AI coding assistant. You chat with it, and it decides on its own when to read, write or list files, check git diff, or run shell commands, then loops until the task is done. Shell commands always wait for a yes from the user, and malformed model responses are retried up to three times.</p>
+            <ul class="stats"><li><b>5</b>tools</li><li><b>3</b>auto-retries</li><li><b>1</b>approval gate</li></ul>
+            <div class="spec"><span>Python</span><span>Groq API</span><span>LLM tool calling</span></div>
+          </div>
+          <details class="code"><summary><span>Show code</span><em>Python</em></summary><pre><code># main.py: the agent loop. The model picks tools until it&#x27;s done.
+for tool_call in message.tool_calls:
+    name = tool_call.function.name
+    arguments = json.loads(tool_call.function.arguments)
+    print(f&quot; [Running tool: {name}({arguments})]&quot;)
+    result = call_tool(name, arguments)
+    conversation_history.append({
+        &quot;role&quot; : &quot;tool&quot;,
+        &quot;tool_call_id&quot; : tool_call.id,
+        &quot;content&quot; : result,
+    })
+
+# shell commands never run without a human saying yes
+elif name == &quot;run_command&quot; :
+    command = arguments[&quot;command&quot;]
+    print(f&quot;
+ The agent wants to run this command:
+   {command}&quot;)
+    approval = input(&quot;Do you approve? (y/n): &quot;).strip().lower()
+    if approval != &quot;y&quot;:
+        return &quot;ERROR: User denied permission to run this command.&quot;
+    return run_command(command)</code></pre><a class="repo" href="https://github.com/lauchloe23/mini-agent" target="_blank" rel="noopener">Full repo on GitHub →</a></details>
         </article>
         <article class="car">
-          <div class="no">#RPG</div>
-          <h3>Maze RPG</h3>
-          <p>A maze game where the player defeats monsters to upgrade the hero's stats.</p>
-          <div class="spec"><span>Java</span></div>
+          <div class="car-info">
+            <div class="no">#03</div>
+            <h3>Platypal</h3>
+            <p>A web app for hospital discharge instructions, built with a team in the healthcare track of the WiE Hackathon. I built the staff-side features, then took over the AI integration partway through.</p>
+            <ul class="stats"><li><b>Nov 2026</b>WiE Hackathon</li><li><b>2</b>roles covered</li></ul>
+            <div class="spec"><span>Web app</span><span>AI integration</span><span>Hackathon</span></div>
+          </div>
+          
+        </article>
+        <article class="car">
+          <div class="car-info">
+            <div class="no">#04</div>
+            <h3>Digit Recognition Network</h3>
+            <p>A neural network that recognizes handwritten digits, built to implement the core ideas of machine learning hands-on.</p>
+            <ul class="stats"></ul>
+            <div class="spec"><span>Python</span><span>Machine learning</span></div>
+          </div>
+          
+        </article>
+        <article class="car">
+          <div class="car-info">
+            <div class="no">#05</div>
+            <h3>Maze RPG</h3>
+            <p>A maze game where the player fights monsters to level up the hero's stats.</p>
+            <ul class="stats"></ul>
+            <div class="spec"><span>Java</span></div>
+          </div>
+          
         </article>
       </div>
     </div>
