@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Chloe Lau — Software Engineering student at the University of Waterloo. Experience, projects and contact.">
+<title>Chloe Lau · Software Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700;800&family=Titillium+Web:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a broadcast timing screen. Circuit map hero, sections run as sectors S1–S3, then team radio. */
+:root{
+  --asphalt:#14161b;
+  --tarmac:#1d2027;
+  --line:#2c3039;
+  --chalk:#eef0f3;
+  --muted:#9aa1ad;
+  --kerb:#e8102a;
+  --s1:#e8102a;
+  --s2:#2f7bff;
+  --s3:#ffd400;
+  --purple:#b04cff;
+  --display:"Saira Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Titillium Web","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--asphalt);color:var(--chalk);font-family:var(--body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--asphalt)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--s3);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* kerb stripe */
+.kerb{height:8px;background:repeating-linear-gradient(90deg,var(--kerb) 0 28px,var(--chalk) 28px 56px)}
+
+/* nav as timing tower */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--asphalt) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
+.tag{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.04em;display:flex;align-items:center;gap:10px;text-decoration:none}
+.tag i{display:inline-block;width:5px;height:22px;background:var(--kerb)}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px;flex-wrap:wrap}
+nav a{display:flex;align-items:center;gap:6px;text-decoration:none;font-family:var(--mono);font-size:12px;padding:6px 10px;border-radius:2px;color:var(--muted)}
+nav a:hover{background:var(--tarmac);color:var(--chalk)}
+nav a b{width:8px;height:8px;display:inline-block}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding-block:56px 40px}
+.hero > *{min-width:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.eyebrow .live{color:var(--chalk);background:var(--kerb);padding:2px 8px;font-weight:600}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(56px,10vw,112px);line-height:.88;margin:18px 0 10px;text-transform:uppercase;letter-spacing:-.01em;text-wrap:balance}
+h1 .code{display:inline-block;font-size:.34em;vertical-align:top;margin-left:10px;padding:4px 10px 2px;border:2px solid var(--chalk);letter-spacing:.08em;line-height:1}
+.lede{font-size:19px;color:var(--chalk);max-width:34ch;margin:0 0 22px}
+.lede span{color:var(--muted)}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:10px 18px;border:2px solid var(--chalk);background:none;color:var(--chalk);cursor:pointer;transform:skewX(-10deg)}
+.btn > span{display:inline-block;transform:skewX(10deg)}
+.btn.go{background:var(--kerb);border-color:var(--kerb)}
+.btn:hover{background:var(--chalk);color:var(--asphalt);border-color:var(--chalk)}
+
+.map{background:var(--tarmac);border:1px solid var(--line);padding:16px 16px 10px;position:relative}
+.map-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.map svg{width:100%;height:auto;display:block;margin-top:6px}
+.map .trk{fill:none;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.map .base{stroke:var(--line);stroke-width:17}
+.map .lbl{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+.map .slbl{font-family:var(--display);font-weight:700;font-size:15px}
+.map a .trk{transition:stroke-width .15s}
+.map a:hover .trk,.map a:focus-visible .trk{stroke-width:13}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend b{width:14px;height:4px;display:inline-block}
+
+/* driver card strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.strip div{padding:16px 18px;border-right:1px solid var(--line);min-width:0}
+.strip div:last-child{border-right:0}
+.strip dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.strip dd{margin:4px 0 0;font-family:var(--display);font-weight:700;font-size:22px;line-height:1.1}
+
+/* sections */
+section{padding-block:64px 8px;scroll-margin-top:70px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.sec-head .s{font-family:var(--display);font-weight:800;font-size:16px;padding:2px 10px;color:var(--asphalt)}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(34px,5vw,48px);text-transform:uppercase;margin:0;line-height:1;letter-spacing:.01em}
+.sec-head p{margin:0;color:var(--muted);font-family:var(--mono);font-size:12px}
+
+/* results table */
+.results{overflow-x:auto;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th{font-family:var(--mono);font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);text-align:left;padding:10px 14px;background:var(--tarmac);border-bottom:1px solid var(--line)}
+td{padding:16px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.pos{font-family:var(--display);font-weight:800;font-size:26px;width:60px;line-height:1}
+td.date{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.role{font-weight:700;font-size:17px;display:block}
+.team{color:var(--muted);font-size:14px}
+td ul{margin:0;padding-left:18px;color:var(--chalk);font-size:15px}
+td li+li{margin-top:4px}
+.chip{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:2px 6px;margin-left:8px;vertical-align:2px;border:1px solid currentColor}
+.chip.on{color:#46d369}
+
+/* garage */
+.garage{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.car{background:var(--tarmac);border:1px solid var(--line);padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.car .no{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--s2)}
+.car h3{font-family:var(--display);font-weight:700;font-size:24px;margin:0;line-height:1.1;text-transform:uppercase}
+.car p{margin:0;font-size:15px;color:var(--chalk)}
+.spec{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px;padding-top:8px;border-top:1px dashed var(--line)}
+.spec span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.spec span+span::before{content:"/ ";color:var(--line)}
+
+/* telemetry */
+.tele{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{border:1px solid var(--line);padding:20px;min-width:0}
+.panel h3{font-family:var(--mono);font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 14px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills span{font-family:var(--display);font-weight:500;font-size:18px;padding:4px 12px;background:var(--tarmac);border-left:3px solid var(--s3)}
+.pills span.learn{border-left-color:var(--muted);color:var(--muted)}
+.course{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:15px}
+.course b{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--s3);display:inline-block;min-width:76px}
+
+/* off track */
+.off{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.off div{border-top:3px solid var(--s3);padding-top:14px;min-width:0}
+.off h3{font-family:var(--display);font-weight:700;font-size:21px;margin:0;text-transform:uppercase;line-height:1.1}
+.off .meta{font-family:var(--mono);font-size:12px;color:var(--muted);margin:4px 0 8px}
+.off p{margin:0;font-size:15px}
+.podium{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 28px;font-size:15px;color:var(--muted)}
+.podium strong{color:var(--chalk);font-weight:600}
+
+/* radio */
+.radio{margin-top:72px;background:var(--tarmac);border-top:1px solid var(--line)}
+.radio .wrap{padding-block:48px;display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center}
+.radio .wrap > *{min-width:0}
+.radio h2{font-size:clamp(40px,7vw,72px)}
+.radio p{color:var(--muted);max-width:44ch}
+.wave{display:flex;gap:3px;align-items:center;height:28px;margin-bottom:14px}
+.wave i{width:4px;background:var(--kerb);border-radius:2px;animation:w 1.2s ease-in-out infinite}
+@keyframes w{0%,100%{height:6px}50%{height:26px}}
+.contact{display:grid;gap:10px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--asphalt);border:1px solid var(--line);padding:12px 14px;flex-wrap:wrap}
+.row small{display:block;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.row .v{font-family:var(--mono);font-size:14px;user-select:all;word-break:break-all}
+.row button,.row a.go{font-family:var(--mono);font-size:12px;background:none;border:1px solid var(--chalk);color:var(--chalk);padding:6px 10px;cursor:pointer;text-decoration:none}
+.row button:hover,.row a.go:hover{background:var(--chalk);color:var(--asphalt)}
+footer{padding-block:18px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;padding-block:36px 28px}
+  .garage,.off{grid-template-columns:1fr 1fr}
+  .radio .wrap{grid-template-columns:1fr}
+  nav{display:none}
+}
+@media (max-width:560px){
+  .strip{grid-template-columns:1fr 1fr}
+  .strip div:nth-child(2){border-right:0}
+  .strip div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .garage,.off,.tele{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .wave i{animation:none;height:14px}
+  #car{display:none}
+}
+</style>
+<style>body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+
+
+<div class="kerb" aria-hidden="true"></div>
+<header>
+  <div class="wrap bar">
+    <a class="tag" href="#top"><i></i>LAU</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#experience"><b style="background:var(--s1)"></b>S1 Experience</a></li>
+        <li><a href="#projects"><b style="background:var(--s2)"></b>S2 Projects</a></li>
+        <li><a href="#skills"><b style="background:var(--s3)"></b>S3 Skills</a></li>
+        <li><a href="#radio"><b style="background:var(--chalk)"></b>Radio</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow"><span class="live">Rookie season</span><span>Software Engineering · University of Waterloo</span></div>
+      <h1>Chloe Lau<span class="code">LAU</span></h1>
+      <p class="lede">First-year software engineer building with machine learning, React and Java. <span>Currently on track with Waterloo Rocketry's launch app.</span></p>
+      <div class="cta">
+        <a class="btn go" href="#radio"><span>Team radio</span></a>
+        <a class="btn" href="#experience"><span>Race history</span></a>
+      </div>
+    </div>
+
+    <figure class="map" style="margin:0">
+      <div class="map-head"><span>Circuit map</span><span>3 sectors · tap to jump</span></div>
+      <svg viewBox="0 0 400 230" role="img" aria-labelledby="mapt">
+        <title id="mapt">Stylised race circuit split into three sectors that link to Experience, Projects and Skills</title>
+        <path class="trk base" d="M60,200 L300,200 C340,200 350,170 330,145 L290,100 C270,75 300,50 330,50 L350,50 C370,50 375,30 355,22 L150,22 C120,22 110,45 130,60 L170,90 C190,105 180,130 150,130 L80,130 C40,130 30,160 40,180 C45,195 50,200 60,200 Z"/>
+        <a href="#experience" aria-label="Sector 1: Experience">
+          <path class="trk" stroke="var(--s1)" d="M60,200 L300,200 C340,200 350,170 330,145 L290,100"/>
+          <text class="slbl" x="190" y="222" fill="var(--s1)" text-anchor="middle">S1 · EXPERIENCE</text>
+        </a>
+        <a href="#projects" aria-label="Sector 2: Projects">
+          <path class="trk" stroke="var(--s2)" d="M290,100 C270,75 300,50 330,50 L350,50 C370,50 375,30 355,22 L150,22 C120,22 110,45 130,60 L170,90"/>
+          <text class="slbl" x="250" y="14" fill="var(--s2)" text-anchor="middle">S2 · PROJECTS</text>
+        </a>
+        <a href="#skills" aria-label="Sector 3: Skills">
+          <path class="trk" stroke="var(--s3)" d="M170,90 C190,105 180,130 150,130 L80,130 C40,130 30,160 40,180 C45,195 50,200 60,200"/>
+          <text class="slbl" x="100" y="118" fill="var(--s3)" text-anchor="middle">S3 · SKILLS</text>
+        </a>
+        <!-- start/finish -->
+        <g transform="translate(96,192)">
+          <rect width="4" height="4" fill="var(--chalk)"/><rect y="4" width="4" height="4" fill="var(--asphalt)"/><rect y="8" width="4" height="4" fill="var(--chalk)"/><rect y="12" width="4" height="4" fill="var(--asphalt)"/>
+          <rect x="4" width="4" height="4" fill="var(--asphalt)"/><rect x="4" y="4" width="4" height="4" fill="var(--chalk)"/><rect x="4" y="8" width="4" height="4" fill="var(--asphalt)"/><rect x="4" y="12" width="4" height="4" fill="var(--chalk)"/>
+        </g>
+        <text class="lbl" x="318" y="178">T1</text>
+        <text class="lbl" x="372" y="40">T4</text>
+        <text class="lbl" x="104" y="48">T6</text>
+        <text class="lbl" x="22" y="160">T9</text>
+        <circle id="car" r="5" fill="var(--chalk)" stroke="var(--kerb)" stroke-width="2">
+          <animateMotion dur="9s" repeatCount="indefinite" rotate="auto" path="M60,200 L300,200 C340,200 350,170 330,145 L290,100 C270,75 300,50 330,50 L350,50 C370,50 375,30 355,22 L150,22 C120,22 110,45 130,60 L170,90 C190,105 180,130 150,130 L80,130 C40,130 30,160 40,180 C45,195 50,200 60,200 Z"/>
+        </circle>
+      </svg>
+      <div class="legend"><span><b style="background:var(--s1)"></b>S1</span><span><b style="background:var(--s2)"></b>S2</span><span><b style="background:var(--s3)"></b>S3</span></div>
+    </figure>
+  </div>
+
+  <div class="wrap">
+    <dl class="strip">
+      <div><dt>Team</dt><dd>UWaterloo SE</dd></div>
+      <div><dt>Season</dt><dd>2026 – Present</dd></div>
+      <div><dt>Home grid</dt><dd>Toronto, ON</dd></div>
+      <div><dt>Radio languages</dt><dd>EN · 普通话 · 粵語</dd></div>
+    </dl>
+  </div>
+
+  <!-- S1 -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head"><span class="s" style="background:var(--s1)">S1</span><h2>Race history</h2><p>Experience, latest first</p></div>
+      <div class="results">
+        <table>
+          <thead><tr><th>Pos</th><th>Role · Team</th><th>Stint</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="pos">01</td>
+              <td><span class="role">Software Team Member<span class="chip on">On track</span></span><span class="team">Waterloo Rocketry</span></td>
+              <td class="date">Sept 2026 – Present</td>
+              <td><ul><li>Contributing to the team's launch app, built with React and Java.</li></ul></td>
+            </tr>
+            <tr>
+              <td class="pos">02</td>
+              <td><span class="role">Student Researcher</span><span class="team">Queen's Summer of Science</span></td>
+              <td class="date">Jun – Aug 2025</td>
+              <td><ul><li>Applied machine learning to cancer-related datasets on a university-level research team.</li><li>Presented findings through group demonstrations and research discussions.</li></ul></td>
+            </tr>
+            <tr>
+              <td class="pos">03</td>
+              <td><span class="role">IT Co-op Student</span><span class="team">Eagleview Managed Services · Toronto</span></td>
+              <td class="date">Jul – Aug 2024</td>
+              <td><ul><li>Built 50+ HTML/CSS machine-performance reports integrated into client cybersecurity monitoring workflows.</li><li>Analyzed endpoint data across 20+ businesses to find efficiency gains and potential vulnerabilities.</li></ul></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- S2 -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head"><span class="s" style="background:var(--s2);color:var(--chalk)">S2</span><h2>The garage</h2><p>Projects</p></div>
+      <div class="garage">
+        <article class="car">
+          <div class="no">#3P</div>
+          <h3>Multiplayer UNO</h3>
+          <p>Networked three-player UNO with host/join over a local network, built on an MVC architecture. Special cards, CPU opponents and three card themes. Now being extended to play across any network.</p>
+          <div class="spec"><span>Java</span><span>Swing</span><span>TCP sockets</span></div>
+        </article>
+        <article class="car">
+          <div class="no">#NN</div>
+          <h3>Digit Recognition Network</h3>
+          <p>A neural network for handwritten digit recognition, built to implement core machine learning concepts by hand.</p>
+          <div class="spec"><span>Python</span><span>Machine learning</span></div>
+        </article>
+        <article class="car">
+          <div class="no">#RPG</div>
+          <h3>Maze RPG</h3>
+          <p>A maze game where the player defeats monsters to upgrade the hero's stats.</p>
+          <div class="spec"><span>Java</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- S3 -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head"><span class="s" style="background:var(--s3)">S3</span><h2>Telemetry</h2><p>Skills and coursework</p></div>
+      <div class="tele">
+        <div class="panel">
+          <h3>Languages</h3>
+          <div class="pills"><span>Python</span><span>Java</span><span>JavaScript</span><span>HTML/CSS</span><span>Jinja</span><span class="learn">C · in testing</span></div>
+          <h3 style="margin-top:22px">Technologies</h3>
+          <div class="pills"><span>React</span><span>Machine learning</span><span>Neural networks</span><span>Data analysis</span><span>GitHub</span><span>Tactical RMM</span><span>Report automation</span></div>
+        </div>
+        <div class="panel">
+          <h3>Current coursework · Fall 2026</h3>
+          <ul class="course">
+            <li><b>CS 137</b>Programming Principles</li>
+            <li><b>ECE 124</b>Digital Circuits and Systems</li>
+            <li><b>MATH 115</b>Linear Algebra for Engineering</li>
+            <li><b>MATH 117</b>Calculus 1 for Engineering</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sec-head" style="margin-top:56px"><h2 style="font-size:30px">Off track</h2><p>Leadership and community</p></div>
+      <div class="off">
+        <div><h3>AI Club Executive</h3><p class="meta">St. Augustine CHS · 2024 – 2026</p><p>Taught weekly Python, machine learning and AI lessons to 20+ members and guided them through building neural networks.</p></div>
+        <div><h3>Tech Mentor</h3><p class="meta">Cyber Seniors · 2024 – Present</p><p>Digital literacy lessons and one-on-one tech support for 30+ seniors across North America.</p></div>
+        <div><h3>Executive</h3><p class="meta">OSAID · 2023 – 2026</p><p>Coordinated campaigns, logistics, marketing and volunteer recruitment for a 20+ member team.</p></div>
+      </div>
+      <div class="podium">
+        <span><strong>Avogadro Chemistry Contest</strong> · Distinction</span>
+        <span><strong>Waterloo Math Contests</strong> · Fryer, Cayley, Galois, Fermat, Hypatia</span>
+        <span><strong>Off-season</strong> · music, Formula 1, learning to DJ</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="radio" id="radio">
+  <div class="wrap">
+    <div>
+      <div class="wave" aria-hidden="true"><i style="animation-delay:0s"></i><i style="animation-delay:.1s"></i><i style="animation-delay:.2s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.4s"></i><i style="animation-delay:.5s"></i><i style="animation-delay:.6s"></i><i style="animation-delay:.7s"></i></div>
+      <h2>Box, box.</h2>
+      <p>Looking for co-op and research roles in software, machine learning and anything that flies or races. Get in touch.</p>
+    </div>
+    <div class="contact">
+      <div class="row">
+        <div><small>Email</small><span class="v" id="email">cyslau@uwaterloo.ca</span></div>
+        <button type="button" id="copy">Copy</button>
+      </div>
+      <div class="row">
+        <div><small>LinkedIn</small><span class="v">linkedin.com/in/chloe-lau-303946290</span></div>
+        <a class="go" href="https://www.linkedin.com/in/chloe-lau-303946290" target="_blank" rel="noopener">Open</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>© 2026 Chloe Lau</span><span>Lap 1 of many</span></div></footer>
+
+<script>
+document.getElementById('copy').addEventListener('click', function () {
+  var btn = this, text = document.getElementById('email').textContent;
+  function done(msg){ btn.textContent = msg; setTimeout(function(){ btn.textContent = 'Copy'; }, 1600); }
+  function fallback(){
+    var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done('Selected');
+  }
+  try {
+    navigator.clipboard.writeText(text).then(function(){ done('Copied'); }, fallback);
+  } catch (e) { fallback(); }
+});
+</script>
+
+</body>
+</html>
